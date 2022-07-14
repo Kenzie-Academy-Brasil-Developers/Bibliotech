@@ -5,17 +5,27 @@ from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView, Response, status
 from rest_framework.authtoken.models import Token
 
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+from users.permissions import IsOwnerOrAdmin
+
+
 from users.models import User
 from users.serializers import LoginSerializer, UserSerializer
 
 
-class ListCreateUserView(generics.ListCreateAPIView):
+class CreateUserView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class ListUserView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-
 class LoginView(APIView):
+        
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
 
@@ -34,3 +44,11 @@ class LoginView(APIView):
 
         return Response(
             {"detail": "invalid email or password"}, status.HTTP_401_UNAUTHORIZED)
+
+class RetrieveUpdateDestroyUserView(generics.RetrieveUpdateDestroyAPIView):
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsOwnerOrAdmin]  
+
+    queryset = User
+    serializer_class = UserSerializer
