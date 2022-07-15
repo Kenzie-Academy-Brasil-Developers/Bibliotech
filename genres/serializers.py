@@ -4,4 +4,4 @@ from .models import Genre
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
-        field = "__all__"
+        fields = "__all__"
