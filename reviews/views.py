@@ -11,7 +11,7 @@ class ListCreateBookReviewView(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-    queryset = Review.objects.all()
+    #queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
     def perform_create(self, serializer):
@@ -21,4 +21,5 @@ class ListCreateBookReviewView(generics.ListCreateAPIView):
     def get_queryset(self):
         reviews = Review.objects.filter(book__id=self.kwargs['pk'])
         return reviews
+    
 
