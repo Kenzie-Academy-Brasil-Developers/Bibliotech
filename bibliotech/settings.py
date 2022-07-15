@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
-from os import getenv
+#from dotenv import load_dotenv
+#from os import getenv
 
-load_dotenv()
+#load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-wvdu&65q(3go=o_&jt_r_9xse5aewnx%dwq3l2(=f*q0le!@go'
+#SECRET_KEY = getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,7 +42,6 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'loans',
 ]
 
 THIRD_PARTY_APPS = [
@@ -51,10 +51,10 @@ THIRD_PARTY_APPS = [
 
 MY_APPS = [
     'users',
-    'reviews'
+    'reviews',
     'books',
     'genres',
-    'loan'
+    'loans'
  ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
@@ -92,7 +92,18 @@ WSGI_APPLICATION = 'bibliotech.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
+
+
+
+
+"""
 print(getenv("POSTGRES_DB"))
 
 DATABASES = {
@@ -106,7 +117,7 @@ DATABASES = {
         "PORT": 5432
     }
 }
-
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
