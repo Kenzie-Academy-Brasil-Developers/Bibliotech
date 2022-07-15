@@ -17,4 +17,8 @@ class ListCreateBookReviewView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         book = get_object_or_404(Book, id=self.kwargs['pk'])
         serializer.save(book=book, user=self.request.user)
+    
+    def get_queryset(self):
+        reviews = Review.objects.filter(book__id=self.kwargs['pk'])
+        return reviews
 
