@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from bibliotech.permissions import IsOwnerOrAdmin
 
 from reviews.models import Review
 from books.models import Book
@@ -23,6 +24,11 @@ class ListCreateReviewView(generics.ListCreateAPIView):
         return reviews
     
 class UpdateDestroyReviewView(generics.RetrieveUpdateDestroyAPIView):
-    ...
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsOwnerOrAdmin]
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+    
 
 
