@@ -8,5 +8,5 @@ class Book(models.Model):
     pages = models.PositiveIntegerField()
     author = models.CharField(max_length=50)
     classification = models.PositiveIntegerField()
-    #genre = models.ForeignKey('genre.Genre', on_delete=models.PROTECT)
+    genre = models.ManyToManyField('genres.Genre', related_name='book')
     #review = models.ForeignKey('reviews.Review', on_delete=models.CASCADE)

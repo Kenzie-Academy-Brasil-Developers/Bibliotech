@@ -8,19 +8,14 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('genres', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Book',
+            name='Genre',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=127)),
-                ('pages', models.PositiveIntegerField()),
-                ('author', models.CharField(max_length=50)),
-                ('classification', models.PositiveIntegerField()),
-                ('genre', models.ManyToManyField(related_name='book', to='genres.genre')),
+                ('name', models.CharField(max_length=127)),
             ],
         ),
     ]
