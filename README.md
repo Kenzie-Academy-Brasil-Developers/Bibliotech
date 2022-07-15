@@ -54,6 +54,8 @@ biblioteca quanto para os usuários
 					<ul>
 						<li>email</li>
 						<li>password</li>
+						<li>fullName</li>
+						<li>birthDate</li>
 					</ul>
 				</details>
 			</td>
