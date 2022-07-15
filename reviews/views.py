@@ -7,7 +7,7 @@ from reviews.models import Review
 from books.models import Book
 from reviews.serializers import ReviewSerializer
 
-class ListCreateBookReviewView(generics.ListCreateAPIView):
+class ListCreateReviewView(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
@@ -22,4 +22,7 @@ class ListCreateBookReviewView(generics.ListCreateAPIView):
         reviews = Review.objects.filter(book__id=self.kwargs['pk'])
         return reviews
     
+class UpdateDestroyReviewView(generics.RetrieveUpdateDestroyAPIView):
+    ...
+
 
