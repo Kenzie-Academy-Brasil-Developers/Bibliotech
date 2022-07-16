@@ -30,7 +30,7 @@ SECRET_KEY = getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://m5-capstone.herokuapp.com/', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['m5-capstone.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
