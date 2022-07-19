@@ -92,27 +92,27 @@ WSGI_APPLICATION = 'bibliotech.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
-print(getenv("POSTGRES_DB"))
-
 DATABASES = {
-    "default": {
-        # O django já contém a instrução para rodar o motor psycopg2 do postgres
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": getenv("POSTGRES_DB"),
-        "USER": getenv("POSTGRES_USER"),
-        "PASSWORD": getenv("POSTGRES_PASSWORD"),
-        "HOST": "postgres",
-        "PORT": 5432
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# print(getenv("POSTGRES_DB"))
+
+# DATABASES = {
+#     "default": {
+#         # O django já contém a instrução para rodar o motor psycopg2 do postgres
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": getenv("POSTGRES_DB"),
+#         "USER": getenv("POSTGRES_USER"),
+#         "PASSWORD": getenv("POSTGRES_PASSWORD"),
+#         "HOST": "postgres",
+#         "PORT": 5432
+#     }
+# }
 
 
 # Password validation
