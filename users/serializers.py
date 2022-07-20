@@ -26,3 +26,11 @@ class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=100)
     password = serializers.CharField(write_only=True)
 
+class UserLoanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "username",
+            "full_name",
+        ]
+

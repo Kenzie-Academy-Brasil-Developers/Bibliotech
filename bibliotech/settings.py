@@ -41,7 +41,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'loans',
+
 ]
 
 THIRD_PARTY_APPS = [
@@ -51,10 +51,10 @@ THIRD_PARTY_APPS = [
 
 MY_APPS = [
     'users',
-    'reviews'
+    'reviews',
     'books',
     'genres',
-    'loan'
+    'loans'
  ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
@@ -95,18 +95,24 @@ WSGI_APPLICATION = 'bibliotech.wsgi.application'
 
 print(getenv("POSTGRES_DB"))
 
+# DATABASES = {
+#     "default": {
+#         # O django já contém a instrução para rodar o motor psycopg2 do postgres
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": getenv("POSTGRES_DB"),
+#         "USER": getenv("POSTGRES_USER"),
+#         "PASSWORD": getenv("POSTGRES_PASSWORD"),
+#         "HOST": "postgres",
+#         "PORT": 5432
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        # O django já contém a instrução para rodar o motor psycopg2 do postgres
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": getenv("POSTGRES_DB"),
-        "USER": getenv("POSTGRES_USER"),
-        "PASSWORD": getenv("POSTGRES_PASSWORD"),
-        "HOST": "postgres",
-        "PORT": 5432
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
