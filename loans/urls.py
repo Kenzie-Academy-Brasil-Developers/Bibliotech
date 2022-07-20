@@ -4,5 +4,6 @@ from . import views
 
 urlpatterns = [
     path('loan/', views.ListLoansView.as_view()),
+    path('loan/all', views.ListAllLoansView.as_view()),
     path('loan/<int:pk>/', views.LoanDetailView.as_view())
 ]
