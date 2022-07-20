@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv
-from os import getenv
+from os import getenv, environ as environment
+import dj_database_url
 
 load_dotenv()
 
@@ -29,7 +30,7 @@ SECRET_KEY = getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['m5-capstone.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -93,26 +94,29 @@ WSGI_APPLICATION = 'bibliotech.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-print(getenv("POSTGRES_DB"))
+db_host = "localhost"
 
-# DATABASES = {
-#     "default": {
-#         # O django já contém a instrução para rodar o motor psycopg2 do postgres
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": getenv("POSTGRES_DB"),
-#         "USER": getenv("POSTGRES_USER"),
-#         "PASSWORD": getenv("POSTGRES_PASSWORD"),
-#         "HOST": "postgres",
-#         "PORT": 5432
-#     }
-# }
+if getenv("COMPOSE") == "true":
+    db_host = "postgres"
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": getenv("POSTGRES_DB"),
+        "USER": getenv("POSTGRES_USER"),
+        "PASSWORD": getenv("POSTGRES_PASSWORD"),
+        "HOST": db_host,
+        "PORT": 5432
     }
 }
+
+DATABASE_URL = environment.get('DATABASE_URL')
+
+if DATABASE_URL:
+    db_from_env = dj_database_url.config(
+        default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+    DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
