@@ -12,3 +12,6 @@ class Loan(models.Model):
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="loan"
     ) 
+    book = models.ManyToManyField(
+        "books.Book", related_name="loan"
+    )

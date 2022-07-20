@@ -6,7 +6,7 @@ import ipdb
 
 
 class BookSerializer(serializers.ModelSerializer):
-    genre = GenreSerializer(many=True, null=True)
+    genre = GenreSerializer(many=True)
     class Meta:
         model = Book
         fields = ["id", "title", "pages", "author", "classification", "genre"]
