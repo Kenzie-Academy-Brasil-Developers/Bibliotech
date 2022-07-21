@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -12,4 +13,4 @@ class Review(models.Model):
     recommendation = models.CharField(max_length=50)
     type_review = models.CharField(choices=TypeReview.choices, default=TypeReview.SUMMARY, max_length=32)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="reviews")
-    #movie
+    book = models.ForeignKey("books.Book", on_delete=models.CASCADE, related_name="reviews")

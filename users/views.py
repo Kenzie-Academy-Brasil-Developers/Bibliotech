@@ -8,7 +8,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from users.permissions import IsOwnerOrAdmin
+from users.permissions import IsOwnerOrAdmin, IsDebt
 
 
 from users.models import User

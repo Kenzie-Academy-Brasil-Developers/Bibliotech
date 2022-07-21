@@ -42,7 +42,6 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'loans',
 ]
 
 THIRD_PARTY_APPS = [
@@ -52,10 +51,10 @@ THIRD_PARTY_APPS = [
 
 MY_APPS = [
     'users',
-    'reviews'
+    'reviews',
     'books',
     'genres',
-    'loan'
+    'loans'
  ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
@@ -98,7 +97,7 @@ db_host = "localhost"
 
 if getenv("COMPOSE") == "true":
     db_host = "postgres"
-
+"""
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -109,6 +108,13 @@ DATABASES = {
         "PORT": 5432
     }
 }
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 DATABASE_URL = environment.get('DATABASE_URL')
 
@@ -116,6 +122,7 @@ if DATABASE_URL:
     db_from_env = dj_database_url.config(
         default=DATABASE_URL, conn_max_age=500, ssl_require=True)
     DATABASES['default'].update(db_from_env)
+    DEBUG = False
 
 
 # Password validation

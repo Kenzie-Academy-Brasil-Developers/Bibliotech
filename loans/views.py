@@ -2,26 +2,36 @@ from django.shortcuts import get_object_or_404, render
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from bibliotech.permissions import IsOwnerOrAdmin
+from loans.mixins import SerializerByMethodMixin
+from loans.permissions import IsOwnerOrAdmin, IsDebt, IsAdmin
+from rest_framework.response import Response
 
 from loans.models import Loan
-from loans.serializers import LoanSerializer
+from loans.serializers import ListLoanSerializer, CreateLoanSerializer
     
-class ListCreateLoanView(generics.ListCreateAPIView):
+class ListCreateLoanView(SerializerByMethodMixin, generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsDebt]
+
+    queryset = Loan.objects.all()          
+    serializer_map = {
+        'GET': ListLoanSerializer,
+        'POST': CreateLoanSerializer,
+    }          
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user, book_id=self.request.data["book_id"])
+
+class RetrieveLoanView(generics.RetrieveAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = LoanSerializer  
-            
-    def perform_create(self, serializer):
-        loan = get_object_or_404(Loan, id=self.kwargs['pk'])
-        serializer.save(loan=loan, user=self.request.user)
+
+    queryset = Loan
+    serializer_class = ListLoanSerializer
+
     
-    def get_queryset(self):
-        loans = Loan.objects.filter(user_id=self.kwargs['pk'])
-        return loans
-    
-class UpdateDestroyLoanView(generics.ListCreateAPIView):
+class DestroyLoanView(generics.DestroyAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsOwnerOrAdmin]
-    queryset = Loan.objects.all()
-    serializer_class = LoanSerializer     
+    permission_classes = [IsAdmin]
+    queryset = Loan
+    serializer_class = ListLoanSerializer     
