@@ -1,3 +1,4 @@
+from django.forms import IntegerField
 from rest_framework import serializers
 
 from users.models import User
@@ -14,9 +15,9 @@ class UserSerializer(serializers.ModelSerializer):
             "phone",
             "password",
             "is_debt",
-            "created_at"
+            "created_at",
         ]
-        read_only = "id"
+        read_only = ["id"]
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
@@ -25,4 +26,12 @@ class UserSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=100)
     password = serializers.CharField(write_only=True)
+
+class UserLoanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "username",
+            "full_name",
+        ]
 

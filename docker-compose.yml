@@ -4,7 +4,7 @@ services:
   postgres:
     image: postgres:14.4-alpine
     ports: 
-      - 5432:5432
+      - 5433:5432
     env_file:
       - ./.env
     healthcheck:
@@ -17,6 +17,8 @@ services:
     build: .
     env_file:
       - ./.env
+    environment:
+      - COMPOSE=true
     command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; python manage.py migrate'
     depends_on:
       postgres: 
@@ -26,9 +28,12 @@ services:
     build: .
     env_file:
       - ./.env
-    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; python manage.py runserver'
+    environment:
+      - COMPOSE=true
+    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8000'
     depends_on:
       - migration
     ports:
       - 8000:8000
-    
+    volumes:
+      - ./:/app/:rw

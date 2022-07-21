@@ -2,14 +2,15 @@ from rest_framework import serializers
 from books.models import Book
 from genres.serializers import GenreSerializer
 from genres.models import Genre
-import ipdb
+import reviews
+from reviews.models import Review
 
 
 class BookSerializer(serializers.ModelSerializer):
     genre = GenreSerializer(many=True)
     class Meta:
         model = Book
-        fields = ["id", "title", "pages", "author", "classification", "genre"]
+        fields = ["id", "title", "pages", "author", "classification", "is_available", "genre"]
 
 
 
