@@ -97,7 +97,7 @@ db_host = "localhost"
 
 if getenv("COMPOSE") == "true":
     db_host = "postgres"
-"""
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -106,13 +106,6 @@ DATABASES = {
         "PASSWORD": getenv("POSTGRES_PASSWORD"),
         "HOST": db_host,
         "PORT": 5432
-    }
-}
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
