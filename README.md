@@ -195,32 +195,16 @@ biblioteca quanto para os usuários
 		<tr>
 			<td style="color: #9d00ff;">GET</td>
 			<td>/api/loan</td>
-			<td>Listagem de todos os emprestimos do usuario fazendo a requisição</td>
+			<td>Listagem de todos os emprestimos</td>
 			<td>USER</td>
 			<td>
 				NONE
 			</td>
-		</tr>
-		<tr>
-			<td style="color: #9d00ff;">GET</td>
-			<td>/api/loan/all</td>
-			<td>Listagem de TODOS os emprestimos</td>
-			<td>USER</td>
-			<td>
-				NONE
-			</td>
-		</tr>
-		<tr>
-			<td style="color: #9d00ff;">GET</td>
-			<td>/api/user/:user_id/loan</td>
-			<td>Listagem de todos os emprestimos de um usuário</td>
-			<td>ADMIN</td>
-			<td>NONE</td>
 		</tr>
 		<tr>
 			<td style="color: lime;">POST</td>
 			<td>/api/loan</td>
-			<td>Fazer emprestimo de 1 até 3 livros</td>
+			<td>Fazer emprestimo de um livro</td>
 			<td>USER</td>
 			<td>
 				<details>
@@ -234,16 +218,20 @@ biblioteca quanto para os usuários
 		</tr>
 		<tr>
 			<td style="color: orange;">PATCH</td>
-			<td>/api/loan:loan_id</td>
+			<td>/api/return/loan/:loan_id</td>
+			<td>Realiza a devolução de um emprestimo</td>
+			<td>ADMIN</td>
+			<td>
+				NONE
+			</td>
+		</tr>
+		<tr>
+			<td style="color: red;">DELETE</td>
+			<td>/api/loan/:loan_id</td>
 			<td>Remove um emprestimo</td>
 			<td>ADMIN</td>
 			<td>
-				<details>
-					<summary>Body</summary>
-					<ul>
-						<li>isReturned</li>
-					</ul>
-				</details>
+				NONE
 			</td>
 		</tr>
 	</tbody>
@@ -318,14 +306,12 @@ biblioteca quanto para os usuários
 
 # Regras de negocio
 
-Um usuario pode emprestar apenas três livros por vez.
+Um usuario pode emprestar apenas um livro por vez.
 
 Tempo de devolução 30 dias.
 
-Caso nao retorne is_debt é setado para **TRUE**.
-
 Usuario com is_debt true, não é permitido pegar novos livros.
 
-Quando devolvido o livro, setar a coluna is_returned da tabela loan para **TRUE**
+Quando devolvido o livro, setar a coluna is_returned da tabela loan para **TRUE**.
 
 Usuario é permitido pegar outro livro, quando não ouver pendencias.
