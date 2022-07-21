@@ -27,6 +27,7 @@ class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=100)
     password = serializers.CharField(write_only=True)
 
+
 class UserLoanSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -35,3 +36,17 @@ class UserLoanSerializer(serializers.ModelSerializer):
             "full_name",
         ]
 
+class UpdateSerializer(serializers.ModelSerializer):
+    is_debt = serializers.BooleanField(read_only=True)
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "username",
+            "full_name",
+            "birth_date",
+            "phone",
+            "created_at",
+            "is_debt"
+        ]

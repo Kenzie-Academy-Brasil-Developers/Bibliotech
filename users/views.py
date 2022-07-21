@@ -12,7 +12,8 @@ from users.permissions import IsOwnerOrAdmin, IsDebt
 
 
 from users.models import User
-from users.serializers import LoginSerializer, UserSerializer
+from users.serializers import LoginSerializer, UserSerializer, UpdateSerializer
+from users.utils import SerializerByMethodMixin
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -45,10 +46,14 @@ class LoginView(APIView):
         return Response(
             {"detail": "invalid email or password"}, status.HTTP_401_UNAUTHORIZED)
 
-class RetrieveUpdateDestroyUserView(generics.RetrieveUpdateDestroyAPIView):
+class RetrieveUpdateDestroyUserView(SerializerByMethodMixin, generics.RetrieveUpdateDestroyAPIView):
 
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsOwnerOrAdmin]  
 
-    queryset = User
-    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    serializer_map = {
+        'GET': UserSerializer,
+        'PATCH': UpdateSerializer,
+        'DELETE': UserSerializer
+    }
